@@ -1,0 +1,212 @@
+/* ============================================================
+   AVENGERS — global cinematic base
+   Theme sampled from the iconic Endgame palette:
+   Near-black indigo voids, electric violet, electric blue,
+   lavender highlights, and warm cosmic embers.
+   ============================================================ */
+
+:root {
+  --black: #000000;
+  --void-black: #05030f;
+  --void-deep: #0b0724;
+  --violet-shadow: #1c0f4a;
+  --violet-deep: #2b1580;
+  --electric-violet: #7b4dff;
+  --electric-blue: #2f6bff;
+  --light-blue: #6ea8ff;
+  --magenta-streak: #c04dff;
+  --lavender: #cbbcff;
+  --white: #f2eeff;
+  --silver: #c5beea;
+  --warm-spark: #ff7a3d;
+  --gold-spark: #ffd15a;
+
+  /* Aliases for components */
+  --green: var(--electric-violet);
+  --mint: var(--lavender);
+  --core: #eef6ff;
+
+  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
+  --font-ui: var(--font-chakra), ui-monospace, monospace;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  background: #05030f;
+  color: var(--white);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior: none;
+}
+
+body {
+  /* The experience is scroll-driven from load — the page always scrolls. */
+  cursor: default;
+}
+
+/* Hide the scrollbar — the scroll is a camera move, not a document. */
+html {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* The full-viewport stage that holds the canvas + every overlay.
+   `inset: 0` fills the viewport exactly and excludes scrollbar. */
+.stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #05030f;
+  z-index: 0;
+}
+
+/* Any layer that must truly fill the viewport. */
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* The DOM trailers live here, behind the transparent atmosphere canvas. */
+.video-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  background: #05030f;
+}
+
+.cover-video-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+/* Video assets: true fullscreen, cover, no letterboxing. */
+.cover-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  background: transparent;
+}
+
+/* Graceful placeholder for video slots pending batch delivery */
+.video-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, rgba(43, 21, 128, 0.45) 0%, rgba(5, 3, 15, 0.95) 75%);
+  color: var(--lavender, #cbbcff);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px dashed rgba(123, 77, 255, 0.35);
+  pointer-events: none;
+}
+
+.video-placeholder span {
+  padding: 10px 18px;
+  background: rgba(11, 7, 36, 0.7);
+  border-radius: 4px;
+  backdrop-filter: blur(8px);
+}
+
+/* The Hero trailer: rich cinematic grade */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+  background: transparent;
+  will-change: opacity;
+  filter: brightness(1.08) contrast(1.04) saturate(1.02)
+    drop-shadow(0 0 40px rgba(123, 77, 255, 0.2));
+}
+
+/* Story layer sits above 3D atmosphere (z3) and orbit cards (z4) so panels cleanly rise over the 3D showcase */
+.story-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Transparent WebGL atmosphere sits ABOVE the video + story panels. */
+.canvas-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+/* Overlays that sit above the WebGL canvas. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.82; }
+}
+
+/* Reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* The invisible scroll track — its height is the distance the scrub spans. */
+.scroll-track {
+  position: relative;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.scroll-track section {
+  width: 100%;
+}

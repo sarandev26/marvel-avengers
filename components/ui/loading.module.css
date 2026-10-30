@@ -1,0 +1,75 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #05030f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.65s;
+  visibility: visible;
+}
+
+.overlay.ready {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.brand {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.55em;
+  color: var(--lavender, #cbbcff);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  opacity: 0.85;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  letter-spacing: 0.08em;
+  color: var(--white, #f2eeff);
+  text-transform: uppercase;
+  text-shadow: 0 0 28px rgba(123, 77, 255, 0.45);
+  margin-bottom: 24px;
+}
+
+.meter {
+  width: clamp(120px, 20vw, 220px);
+  height: 2px;
+  background: rgba(123, 77, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, #7b4dff, #6ea8ff, transparent);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
